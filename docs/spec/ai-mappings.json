@@ -43,6 +43,7 @@
     "SerpResultSearchParameters": "SerpResultSearchParameters",
     "SerpResultOrganicResults": "OrganicResult",
     "SerpResultRelatedSearches": "RelatedSearch",
-    "FieldsResult": "FieldsResult"
+    "FieldsResult": "FieldsResult",
+    "Fields": "FieldDescriptions"
   }
 }

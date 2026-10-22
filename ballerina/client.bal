@@ -44,7 +44,8 @@ public isolated client class Client {
         string resourcePath = string `/ai/question`;
         map<anydata> queryParam = {...http:getQueryMap(queries)};
         queryParam["api_key"] = self.apiKeyConfig.apiKey;
-        resourcePath = resourcePath + check getPathForQueryParam(queryParam);
+        map<Encoding> queryParamEncoding = {"headers": {style: DEEPOBJECT, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queryParam, queryParamEncoding);
         return self.clientEp->get(resourcePath, headers1);
     }
 
@@ -57,7 +58,8 @@ public isolated client class Client {
         string resourcePath = string `/ai/fields`;
         map<anydata> queryParam = {...http:getQueryMap(queries)};
         queryParam["api_key"] = self.apiKeyConfig.apiKey;
-        resourcePath = resourcePath + check getPathForQueryParam(queryParam);
+        map<Encoding> queryParamEncoding = {"fields": {style: DEEPOBJECT, explode: true}, "headers": {style: DEEPOBJECT, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queryParam, queryParamEncoding);
         return self.clientEp->get(resourcePath, headers1);
     }
 
@@ -70,7 +72,8 @@ public isolated client class Client {
         string resourcePath = string `/html`;
         map<anydata> queryParam = {...http:getQueryMap(queries)};
         queryParam["api_key"] = self.apiKeyConfig.apiKey;
-        resourcePath = resourcePath + check getPathForQueryParam(queryParam);
+        map<Encoding> queryParamEncoding = {"headers": {style: DEEPOBJECT, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queryParam, queryParamEncoding);
         return self.clientEp->get(resourcePath, headers1);
     }
 
@@ -83,7 +86,8 @@ public isolated client class Client {
         string resourcePath = string `/text`;
         map<anydata> queryParam = {...http:getQueryMap(queries)};
         queryParam["api_key"] = self.apiKeyConfig.apiKey;
-        resourcePath = resourcePath + check getPathForQueryParam(queryParam);
+        map<Encoding> queryParamEncoding = {"headers": {style: DEEPOBJECT, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queryParam, queryParamEncoding);
         return self.clientEp->get(resourcePath, headers1);
     }
 
@@ -96,7 +100,8 @@ public isolated client class Client {
         string resourcePath = string `/selected`;
         map<anydata> queryParam = {...http:getQueryMap(queries)};
         queryParam["api_key"] = self.apiKeyConfig.apiKey;
-        resourcePath = resourcePath + check getPathForQueryParam(queryParam);
+        map<Encoding> queryParamEncoding = {"headers": {style: DEEPOBJECT, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queryParam, queryParamEncoding);
         return self.clientEp->get(resourcePath, headers1);
     }
 
@@ -109,7 +114,7 @@ public isolated client class Client {
         string resourcePath = string `/selected-multiple`;
         map<anydata> queryParam = {...http:getQueryMap(queries)};
         queryParam["api_key"] = self.apiKeyConfig.apiKey;
-        map<Encoding> queryParamEncoding = {"selectors": {style: FORM, explode: true}};
+        map<Encoding> queryParamEncoding = {"selectors": {style: FORM, explode: true}, "headers": {style: DEEPOBJECT, explode: true}};
         resourcePath = resourcePath + check getPathForQueryParam(queryParam, queryParamEncoding);
         return self.clientEp->get(resourcePath, headers1);
     }

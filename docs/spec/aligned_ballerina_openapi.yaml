@@ -90,9 +90,7 @@ paths:
         style: deepObject
         explode: true
         schema:
-          type: object
-          additionalProperties:
-            type: string
+          $ref: '#/components/schemas/FieldDescriptions'
         example:
           title: Main product title
           price: Current product price
@@ -793,7 +791,6 @@ components:
           x-ballerina-name: requestParameters
       description: Error details returned by the API
     DataResultRequestParameters:
-      description: The URL as requested and how it was classified
       type: object
       properties:
         provider:
@@ -810,6 +807,7 @@ components:
           type: string
           description: The URL that was requested
           example: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      description: The URL as requested and how it was classified
     SerpResult:
       title: Search engine results
       type: object
@@ -841,7 +839,6 @@ components:
           x-ballerina-name: searchParameters
       description: Parsed search engine results page
     SerpResultSearchParameters:
-      description: The normalized parameters the search was run with
       type: object
       properties:
         q:
@@ -864,10 +861,8 @@ components:
           type: integer
           description: Results page number
           example: 1
+      description: The normalized parameters the search was run with
     ErrorNextStep:
-      description: The next configuration worth trying, with its price on current plans. Absent when the
-        request already used the strongest configuration (stealth or a dedicated route), when a retry
-        would not help (bad URL, site's own 4xx), or for Google search URLs (use /serp instead)
       type: object
       properties:
         cost:
@@ -887,8 +882,19 @@ components:
             custom_proxy, which otherwise overrides any proxy setting)
           items:
             type: string
+      description: The next configuration worth trying, with its price on current plans. Absent when the
+        request already used the strongest configuration (stealth or a dedicated route), when a retry
+        would not help (bad URL, site's own 4xx), or for Google search URLs (use /serp instead)
+    FieldDescriptions:
+      description: Descriptions of the fields to extract, keyed by field name
+      type: object
+      properties:
+        title:
+          type: string
+          description: Description of the page title to extract
+      additionalProperties:
+        type: string
     SerpResultSearchInformation:
-      description: What Google reported about the search itself
       type: object
       properties:
         query_displayed:
@@ -915,9 +921,8 @@ components:
           - Empty showing fixed spelling results
           - Fully empty
           x-ballerina-name: organicResultsState
+      description: What Google reported about the search itself
     ErrorRequestParameters:
-      description: The configuration the failed request ran with. Present on target-side errors (blocked,
-        challenge, non-2xx, connection closed, wait_for), not on request-validation errors
       type: object
       properties:
         proxy:
@@ -945,6 +950,8 @@ components:
             - residential
             - stealth
           x-ballerina-name: tiersTried
+      description: The configuration the failed request ran with. Present on target-side errors (blocked,
+        challenge, non-2xx, connection closed, wait_for), not on request-validation errors
     FieldsResult:
       type: object
       properties:
@@ -1053,6 +1060,10 @@ components:
       explode: true
       schema:
         type: object
+        properties:
+          Cookie:
+            type: string
+            description: Cookie header value to send to the target page
         additionalProperties:
           type: string
       example:

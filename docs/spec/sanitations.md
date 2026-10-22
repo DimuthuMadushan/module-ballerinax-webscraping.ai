@@ -29,6 +29,10 @@ These changes are done in order to improve the overall usability, and as workaro
 
    _Reason_: Remove `undocumented field` warnings and improve generated documentation. These edits were made in the aligned spec and must be re-applied after a re-align.
 
+6. Add `properties` to the object-typed query parameters `fields` (property `title`) and `headers` (property `Cookie`), keeping `additionalProperties`, in `docs/spec/openapi.yml`. The inline `fields` schema is named `FieldDescriptions` through `docs/spec/ai-mappings.json`.
+
+   _Reason_: For a free-form `type: object` + `additionalProperties` query parameter the generator drops `style: deepObject`, so the client sent `?title=x` instead of `?fields[title]=x`. With a declared property it emits the `DEEPOBJECT` encoding map for `fields` and `headers`.
+
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.

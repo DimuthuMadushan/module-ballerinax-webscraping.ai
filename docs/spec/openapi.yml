@@ -80,6 +80,10 @@ paths:
           example: {"title":"Main product title","price":"Current product price","description":"Full product description"}
           schema:
             type: object
+            properties:
+              title:
+                type: string
+                description: Description of the page title to extract
             additionalProperties:
               type: string
           style: deepObject
@@ -608,6 +612,10 @@ components:
       example: { "Cookie": "session=some_id" }
       schema:
         type: object
+        properties:
+          Cookie:
+            type: string
+            description: Cookie header value to send to the target page
         additionalProperties:
           type: string
       style: deepObject

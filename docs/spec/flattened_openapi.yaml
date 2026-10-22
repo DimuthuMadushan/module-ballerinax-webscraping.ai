@@ -93,9 +93,7 @@ paths:
         style: deepObject
         explode: true
         schema:
-          type: object
-          additionalProperties:
-            type: string
+          $ref: "#/components/schemas/Fields"
         example:
           title: Main product title
           price: Current product price
@@ -741,6 +739,14 @@ components:
           type: integer
           description: Remaining concurrent requests
       description: Account quota and concurrency information
+    Fields:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Description of the page title to extract
+      additionalProperties:
+        type: string
     ErrorRequestParameters:
       type: object
       properties:
@@ -1013,6 +1019,10 @@ components:
       explode: true
       schema:
         type: object
+        properties:
+          Cookie:
+            type: string
+            description: Cookie header value to send to the target page
         additionalProperties:
           type: string
       example:

@@ -44,6 +44,13 @@ isolated function testGetFields() returns error? {
     test:assertTrue(response?.result !is ());
 }
 
+@test:Config {groups: ["mock_tests"]}
+isolated function testGetFieldsRequiresDeepObjectFields() returns error? {
+    // The mock rejects the request unless the `fields[title]` nested query parameter is received.
+    FieldsResult response = check webScraping->getFields(url = TARGET_URL, fields = {"title": "Page title", "price": "Product price"});
+    test:assertTrue(response?.result !is ());
+}
+
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetHtml() returns error? {
     string response = check webScraping->getHtml(url = TARGET_URL);

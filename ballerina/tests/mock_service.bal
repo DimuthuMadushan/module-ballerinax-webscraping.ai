@@ -42,7 +42,7 @@ service / on ep0 {
     # Extract structured data fields from a web page
     #
     # + url - URL of the target page
-    # + fields - Object describing fields to extract from the page and their descriptions
+    # + request - The incoming request, used to read the deepObject `fields[name]` query parameters
     # + headers - HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"})
     # + timeout - Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 25000; larger values are capped at 25000)
     # + js - Execute on-page JavaScript using a headless browser (true by default)
@@ -66,7 +66,11 @@ service / on ep0 {
 # )
     # http:GatewayTimeout (Timeout error, try increasing timeout parameter value)
     # http:Ok (The retrieved fields)
-    resource function get ai/fields(string url, record{|string...;|}? fields, record{|string...;|}? headers, @http:Query {name: "wait_for"} string? waitFor, @http:Query {name: "custom_proxy"} string? customProxy, @http:Query {name: "js_script"} string? jsScript, int timeout = 10000, boolean js = true, @http:Query {name: "js_timeout"} int jsTimeout = 2000, "datacenter"|"residential"|"stealth"|"auto" proxy = "datacenter", "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us", "desktop"|"mobile"|"tablet" device = "desktop", @http:Query {name: "error_on_404"} boolean errorOn404 = false, @http:Query {name: "error_on_redirect"} boolean errorOnRedirect = false) returns ErrorBadRequest|ErrorPaymentRequired|ErrorForbidden|ErrorTooManyRequests|ErrorInternalServerError|ErrorGatewayTimeout|FieldsResult {
+    resource function get ai/fields(string url, http:Request request, record{|string...;|}? headers, @http:Query {name: "wait_for"} string? waitFor, @http:Query {name: "custom_proxy"} string? customProxy, @http:Query {name: "js_script"} string? jsScript, int timeout = 10000, boolean js = true, @http:Query {name: "js_timeout"} int jsTimeout = 2000, "datacenter"|"residential"|"stealth"|"auto" proxy = "datacenter", "us"|"gb"|"de"|"it"|"fr"|"ca"|"es"|"ru"|"jp"|"kr"|"in"|"hk"|"tr" country = "us", "desktop"|"mobile"|"tablet" device = "desktop", @http:Query {name: "error_on_404"} boolean errorOn404 = false, @http:Query {name: "error_on_redirect"} boolean errorOnRedirect = false) returns ErrorBadRequest|ErrorPaymentRequired|ErrorForbidden|ErrorTooManyRequests|ErrorInternalServerError|ErrorGatewayTimeout|FieldsResult {
+        if request.getQueryParamValue("fields[title]") is () {
+            ErrorBadRequest badRequest = {body: {message: "fields[title] is required", statusCode: 400}};
+            return badRequest;
+        }
         FieldsResult fieldsResult = {result: {"title": "Example Product", "price": "$99.99", "description": "This is a sample product description"}};
         return fieldsResult;
     }
